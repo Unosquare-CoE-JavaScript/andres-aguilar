@@ -14,6 +14,8 @@ notes from the Book You Don’t Know JS Yet: Get Started (YDKJSY)
     - [Filling the Gaps](#filling-the-gaps)
     - [What’s in an Interpretation?](#whats-in-an-interpretation)
     - [Web Assembly (WASM)](#web-assembly-wasm)
+    - [Strictly Speaking](#strictly-speaking)
+    - [Defined](#defined)
 
 ## Chapter 1: What is Javascript?
 Actually what we use in modern web development is not Javascript anymore "the official name of the language specified by TC39 and formalized by the ECMA standards body is ECMAScript" but we should just call it "JS".
@@ -220,3 +222,56 @@ I think it’s clear that in spirit, if not in practice, **JS is a compiled lang
 And again, the reason that matters is, since JS is compiled, we are informed of static errors (such as malformed syntax) before our code is executed. That is a substantively different interaction model than we get with traditional “scripting” programs, and arguably more helpful!
 
 ### Web Assembly (WASM)
+
+In 2013, engineers from Mozilla Firefox demonstrated a port of the Unreal 3 game engine from C to JS.
+
+WASM is similar to ASM.js in that its original intent was to provide a path for non-JS programs (C, etc.) to be converted to a form that could run in the JS engine.
+
+WASM will not replace JS. WASM significantly augments what the web (including JS) can accomplish. That’s a great thing, entirely orthogonal to whether some people will use it as an escape hatch from having to write JS.
+
+### Strictly Speaking
+
+Back in 2009 with the release of ES5, JS added strict mode as
+an opt-in mechanism for encouraging better JS programs.
+
+Strict mode shouldn’t be thought of as a restriction on what you can’t do, but rather as a guide to the best way to do things so that the JS engine has the best chance of optimizing and efficiently running the code.
+
+Most strict mode controls are in the form of early errors, meaning errors that aren’t strictly syntax errors but are still thrown at compile time (before the code is run).
+
+For example, strict mode disallows naming two function parameters the same, and results in an early error. Some other strict mode controls are only observable at runtime, such as how this defaults to undefined instead of the global object.
+
+the best mindset is that strict mode is like a linter reminding you how JS should be written to have the highest quality and best chance at performance.
+
+Strict mode is switched on per file with a special pragma (nothing allowed before it except comments/whitespace):
+
+```js 
+
+// only whitespace and comments are allowed
+// before the use-strict pragma
+"use strict";
+// the rest of the file runs in strict mode
+```
+
+### Warning! <!-- omit in toc -->
+*Something to be aware of is that even a stray ; all by itself appearing before the strict mode pragma will render the pragma useless; no errors are thrown because it’s valid JS to have a string literal expression in a statement position, but it also will silently not turn on strict mode!*
+
+Strict mode can alternatively be turned on **per-function scope**, with exactly the same rules about its surroundings:
+
+```js 
+function someOperations() {
+// whitespace and comments are fine here 
+"use strict";
+// all this code will run in strict mode
+}
+```
+
+Interestingly, if a file has strict mode turned on, the function- level strict mode pragmas are disallowed. **So you have to pick one or the other.**
+
+The **only** valid reason to use a per-function approach to strict mode is when you are converting an existing non-strict mode program file and need to make the changes little by little over time.
+
+### Defined
+
+JS is an implementation of the ECMAScript standard (version ES2019 as of this writing), which is guided by the TC39 committee and hosted by ECMA. It runs in browsers and other JS environments such as Node.js.
+JS is a multi-paradigm language, meaning the syntax and capabilities allow a developer to mix and match (and bend and reshape!) concepts from various major paradigms, such as procedural, object-oriented (OO/classes), and functional (FP).
+JS is a compiled language, meaning the tools (including the JS engine) process and verify a program (reporting any errors!) before it executes.
+With our language now defined, let’s start getting to know its ins and outs.
