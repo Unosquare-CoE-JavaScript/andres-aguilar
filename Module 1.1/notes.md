@@ -11,6 +11,9 @@ notes from the Book You Don’t Know JS Yet: Get Started (YDKJSY)
     - [Backwards & Forwards](#backwards--forwards)
     - [Jumping the Gaps](#jumping-the-gaps)
       - [Transpiling with Babel](#transpiling-with-babel)
+    - [Filling the Gaps](#filling-the-gaps)
+    - [What’s in an Interpretation?](#whats-in-an-interpretation)
+    - [Web Assembly (WASM)](#web-assembly-wasm)
 
 ## Chapter 1: What is Javascript?
 Actually what we use in modern web development is not Javascript anymore "the official name of the language specified by TC39 and formalized by the ECMA standards body is ECMAScript" but we should just call it "JS".
@@ -131,3 +134,89 @@ An equivalent program (with minimal re-working) that Babel can produce just choo
 You may wonder: why go to the trouble of using a tool to convert from a newer syntax version to an older one? Couldn’t we just write the two variables and skip using the let keyword? The reason is, it’s strongly recommended that developers use the latest version of JS so that their code is clean and communicates its ideas most effectively.
 
 Developers should focus on writing the clean, new syntax forms, and let the tools take care of producing a forwards- compatible version of that code that is suitable to deploy and run on the oldest-supported JS engine environments.
+
+### Filling the Gaps
+If the forwards-compatibility issue is not related to new syntax, but rather to a missing API method that was only recently added, the most common solution is to provide a definition for that missing API method that stands in and acts as if the older environment had already had it natively defined. This pattern is called a **polyfill (aka “shim”)**.
+
+```Javascript 
+// getSomeRecords() returns us a promise for some // data it will fetch
+var pr = getSomeRecords();
+// show the UI spinner while we get the data
+startSpinner();
+pr
+.then(renderRecords) // render if successful .catch(showError) // show an error if not .finally(hideSpinner) // always hide the spinner
+
+```
+This code uses an ES2019 feature, the **finally(..)** method on the **promise prototype**.
+
+This method (finally()) would not work in a pre-ES2019 environment.
+
+A polyfill for finally(..) in pre-ES2019 environments could look like this:
+
+```js 
+if (!Promise.prototype.finally) { 
+  Promise.prototype.finally = function f(fn){
+    return this.then( 
+      function t(v){
+        return Promise.resolve( fn() ) 
+        .then(function t(){
+         return v; 
+         });
+      },
+      function c(e){
+        return Promise.resolve( fn() ) .then(function t(){
+          throw e; });
+        });
+      } 
+    );
+  }; 
+}
+```
+
+### Warning! <!-- omit in toc -->
+  *This is only a simple illustration of a ba- sic (not entirely spec-compliant) polyfill for finally(..). Don’t use this polyfill in your code; always use a robust, official polyfill wher- ever possible, such as the collection of polyfill- s/shims in ES-Shim.*
+
+The if statement protects the polyfill definition by preventing it from running in any environment where the JS engine has already defined that method. In older environments, the polyfill is defined, but in newer environments the if statement is quietly skipped.
+
+Transpilers like Babel typically detect which polyfills your code needs and provide them automatically for you.
+
+But occasionally you may need to include/define them explicitly,
+which works similar to the snippet we just looked at.
+
+Since JS isn’t going to stop improving, the gap will never go away. Both techniques should be embraced as a standard part of every JS project’s production chain going forward.
+
+### What’s in an Interpretation?
+
+A long-debated question for code written in JS: is it an inter- preted script or a compiled program?
+
+**we distribute the source code, not the binary form**
+
+In scripted or interpreted languages, an error on line 5 of a program won’t be discovered until lines 1 through 4 have already executed.
+
+Compare that to languages which do go through a processing step (typically, called parsing) before any execution occurs,
+In this processing model, an invalid command (such as broken syntax) on line 5 would be caught during the **parsing phase**, before any execution has begun, and none of the program would run.
+
+JS source code is parsed before it is executed. The specification requires as much, because it calls for “early errors”—statically determined errors in code, such as a duplicate parameter name—to be reported before the code starts executing.
+
+So **JS is a parsed language**, but is it compiled?
+
+The answer is closer to yes than no.
+
+To be specific, this “compilation” produces a binary byte code (of sorts), which is then handed to the “JS virtual machine” to execute. Some like to say this VM is “interpreting” the byte code.
+
+Another wrinkle is that JS engines can employ multiple passes of JIT (Just-In-Time) processing/optimization on the generated code (post parsing), which again could reasonably be labeled either “compilation” or “interpretation” depending on perspective.
+
+So what do these nitty-gritty details boil down to? Step back
+and consider the entire flow of a JS source program:
+
+1. After a program leaves a developer’s editor, it gets tran- spiled by Babel, then packed by Webpack (and perhaps half a dozen other build processes), then it gets delivered in that very different form to a JS engine.
+2. The JS engine parses the code to an AST.
+3. Then the engine converts that AST to a kind-of byte
+code, a binary intermediate representation (IR), which is then refined/converted even further by the optimizing JIT compiler.
+4. Finally, the JS VM executes the program.
+
+I think it’s clear that in spirit, if not in practice, **JS is a compiled language.**
+
+And again, the reason that matters is, since JS is compiled, we are informed of static errors (such as malformed syntax) before our code is executed. That is a substantively different interaction model than we get with traditional “scripting” programs, and arguably more helpful!
+
+### Web Assembly (WASM)
