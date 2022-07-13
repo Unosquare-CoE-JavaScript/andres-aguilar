@@ -1,9 +1,6 @@
-# You Don’t Know JS Yet: Get Started
-notes from the Book You Don’t Know JS Yet: Get Started (YDKJSY)
 
 ### Table of contents: <!-- omit in toc -->
-- [You Don’t Know JS Yet: Get Started](#you-dont-know-js-yet-get-started)
-  - [Chapter 1: What is Javascript?](#chapter-1-what-is-javascript)
+- [Chapter 1: What is Javascript?](#chapter-1-what-is-javascript)
     - [The Web Rules Everything About (JS)](#the-web-rules-everything-about-js)
     - [Not all (Web) JS...](#not-all-web-js)
     - [It's not always JS](#its-not-always-js)
@@ -17,7 +14,7 @@ notes from the Book You Don’t Know JS Yet: Get Started (YDKJSY)
     - [Strictly Speaking](#strictly-speaking)
     - [Defined](#defined)
 
-## Chapter 1: What is Javascript?
+# Chapter 1: What is Javascript?
 Actually what we use in modern web development is not Javascript anymore "the official name of the language specified by TC39 and formalized by the ECMA standards body is ECMAScript" but we should just call it "JS".
 
 ### The Web Rules Everything About (JS)
@@ -272,6 +269,7 @@ The **only** valid reason to use a per-function approach to strict mode is when 
 ### Defined
 
 JS is an implementation of the ECMAScript standard (version ES2019 as of this writing), which is guided by the TC39 committee and hosted by ECMA. It runs in browsers and other JS environments such as Node.js.
+
 JS is a multi-paradigm language, meaning the syntax and capabilities allow a developer to mix and match (and bend and reshape!) concepts from various major paradigms, such as procedural, object-oriented (OO/classes), and functional (FP).
+
 JS is a compiled language, meaning the tools (including the JS engine) process and verify a program (reporting any errors!) before it executes.
-With our language now defined, let’s start getting to know its ins and outs.
