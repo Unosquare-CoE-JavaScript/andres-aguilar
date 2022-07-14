@@ -6,6 +6,10 @@
       - [Iterables](#iterables)
     - [Closure](#closure)
     - [*this* Keyword](#this-keyword)
+    - [Prototypes](#prototypes)
+      - [Object Linkage](#object-linkage)
+      - [this Revisited](#this-revisited)
+    - [Asking “Why?”](#asking-why)
 
 # Chapter 3: Digging to the Roots of JS
 
@@ -271,3 +275,163 @@ Remember: this closure is not over the value (like 1 or 3), but
 over the variable idx itself.
 
 ### *this* Keyword
+
+One of JS’s most powerful mechanisms is also one of its most misunderstood: the this keyword.
+
+Functions also have another characteristic besides their scope that influences what they can access. This characteristic is best described as an **execution context**, and it’s exposed to the function via its *this* keyword.
+
+this is not a fixed characteristic of a function based on the function’s definition, but rather a dynamic characteristic that’s determined each time the function is called.
+
+One way to think about the execution context is that it’s a tangible object whose properties are made available to a function while it executes.
+
+Compare that to scope, which can also be thought of as an object; except, the scope object is hidden inside the JS engine, it’s always the same for that function, and its properties take the form of identifier variables available inside the function.
+
+```Js
+function classroom(teacher) { 
+    return function study() {
+        console.log(
+            `${ teacher } says to study ${ this.topic }`
+        );
+    };
+}
+var assignment = classroom("Kyle");
+```
+
+The outer classroom(..) function makes no reference to a this keyword, so it’s just like any other function we’ve seen so far.
+
+But the inner study() function does reference this, which makes it a this-aware function. In other words, it’s a function that is dependent on its *execution context*.
+
+The inner study() function returned by classroom("Kyle") is assigned to a variable called assignment. So how can assignment() (aka study()) be called?
+
+```Js
+assignment();
+// Kyle says to study undefined  -- Oops :(
+```
+
+In this snippet, we call assignment() as a plain, normal function, without providing it any execution context.
+
+Now consider:
+
+```Js
+var homework = { 
+    topic: "JS",
+    assignment: assignment
+};
+homework.assignment();
+// Kyle says to study JS
+```
+
+the this for that function call will be the homework object. Hence, this.topic resolves to "JS".
+
+Lastly:
+
+```Js
+var otherHomework = { 
+    topic: "Math"
+};
+assignment.call(otherHomework);
+// Kyle says to study Math
+```
+
+A third way to invoke a function is with the call(..) method, which takes an object (otherHomework here) to use for setting the this reference for the function call. The property reference this.topic resolves to "Math".
+
+A function that closes over a scope can never reference a different scope or set of variables. But a function that has dynamic this context awareness can be quite helpful for certain tasks.
+
+### Prototypes
+
+Where this is a characteristic of function execution, a proto- type is a characteristic of an object, and specifically resolution of a property access.
+
+Think about a prototype as a linkage between two objects; the linkage is hidden behind the scenes, though there are ways to expose and observe it.
+
+This prototype linkage occurs when an object is created; it’s linked to another object that already exists.
+
+The purpose of this prototype linkage (i.e., from an object B to another object A) is so that accesses against B for properties/methods that B does not have, are delegated to A to handle.
+
+Delegation of property/method access allows two (or more!) objects to cooperate with each other to perform a task.
+
+#### Object Linkage
+
+To define an object prototype linkage, you can create the object using the Object.create(..) utility:
+
+```Js
+var homework = { 
+    topic: "JS"
+};
+
+var otherHomework = Object.create(homework); 
+
+otherHomework.topic; // "JS"
+```
+
+The first argument to Object.create(..) specifies an ob- ject to link the newly created object to, and then returns the newly created (and linked!) object.
+
+Figure 4 shows how the three objects (otherHomework, home- work, and Object.prototype) are linked in a prototype chain:
+
+<img src="./diagrams/fig4.png">
+
+Consider: 
+
+```Js
+homework.topic;
+// "JS"
+
+otherHomework.topic;
+// "JS"
+
+otherHomework.topic = "Math";
+otherHomework.topic;
+// "Math"
+
+homework.topic;
+// "JS" -- not "Math"
+```
+The assignment to topic creates a property of that name directly on otherHomework; **there’s no effect on the topic property on homework.**
+
+The next statement then accesses otherHomework.topic, and we see the non-delegated an- swer from that new property: "Math".
+
+Figure 5 shows the objects/properties after the assignment
+that creates the otherHomework.topic property:
+
+<img src="./diagrams/fig5.png">
+
+The topic on otherHomework is “shadowing” the property of the same name on the homework object in the chain.
+
+### Note <!-- omit in toc -->
+
+Another frankly more convoluted but perhaps still more common way of creating an object with a prototype linkage is using the “prototypal class” pattern, from before class (see Chapter 2, “Classes”) was added in ES6. We’ll cover this topic in more detail in Appendix A, “Prototypal ‘Classes’”.
+
+#### this Revisited
+
+Its true importance shines when considering how it powers prototype-delegated function calls.
+
+one of the main reasons *this* supports dynamic context based on how the function is called is so that method calls on objects which delegate through the prototype chain still maintain the expected this.
+
+```Js
+var homework = { 
+    study() {
+        console.log(`Please study ${ this.topic }`); 
+    }
+};
+var jsHomework = Object.create(homework); 
+jsHomework.topic = "JS"; 
+jsHomework.study();
+// Please study JS
+
+var mathHomework = Object.create(homework); 
+mathHomework.topic = "Math"; mathHomework.study();
+// Please study Math
+```
+
+The two objects jsHomework and mathHomework each pro- totype link to the single homework object, which has the study() function.
+
+jsHomework and mathHomework are each given their own topic property (see Figure 6).
+
+<img src="./diagrams/fig6.png">
+
+jsHomework.study() delegates to homework.study(), but its this (this.topic) for that execution resolves to jsHome- work because of how the function is called, so this.topic is "JS". Similarly for mathHomework.study() delegating to homework.study() but still resolving this to mathHome- work, and thus this.topic as "Math".
+
+### Asking “Why?”
+
+One of the most important skills you can practice and bolster is curiosity, and the art of asking “Why?” when you encounter something in the language.
+Even though this chapter has gone quite deep on some of the topics, many details have still been entirely skimmed over. There’s much more to learn here, and the path to that starts with you asking the right questions of your code. Asking the right questions is a critical skill of becoming a better developer.
+
