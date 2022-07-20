@@ -12,3 +12,4 @@
 - [Chapter 1: What’s the Scope?](./Module%201.2/Chapter%201/whats-the-scope.md)
 - [Chapter 2: Illustrating Lexical Scope](./Module%201.2/Chapter%202/lexical-scope.md)
 - [Chapter 3: The Scope Chain](./Module%201.2/Chapter%203/the-scope-chain.md)
+- [Chapter 4: Around the Global Scope](./Module%201.2/Chapter%204/around-global-scope.md)
