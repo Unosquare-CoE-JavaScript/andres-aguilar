@@ -14,3 +14,4 @@
 - [Chapter 3: The Scope Chain](./Module%201.2/Chapter%203/the-scope-chain.md)
 - [Chapter 4: Around the Global Scope](./Module%201.2/Chapter%204/around-global-scope.md)
 - [Chapter 5: The (Not So) Secret Lifecycle of Variables](./Module%201.2/Chapter%205/lifecycle-of-variables.md)
+- [Chapter 6: Limiting Scope Exposure](./Module%201.2/Chapter%206/limiting-scope-exposure.md)
