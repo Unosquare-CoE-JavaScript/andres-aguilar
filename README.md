@@ -15,3 +15,7 @@
 - [Chapter 4: Around the Global Scope](./Module%201.2/Chapter%204/around-global-scope.md)
 - [Chapter 5: The (Not So) Secret Lifecycle of Variables](./Module%201.2/Chapter%205/lifecycle-of-variables.md)
 - [Chapter 6: Limiting Scope Exposure](./Module%201.2/Chapter%206/limiting-scope-exposure.md)
+- [Chapter 7: Using Closures](./Module%201.2/Chapter%207/using-closures.md)
+- [Chapter 8: The Module Pattern](./Module%201.2/Chapter%208/module-pattern.md)
+- [Appendix A: Exploring Further](./Module%201.2/Appendix/A/exploring-further.md)
+- [Appendix B: Practice](./Module%201.2/Appendix/B/practice.md)
