@@ -19,3 +19,15 @@
 - [Chapter 8: The Module Pattern](./Module%201.2/Chapter%208/module-pattern.md)
 - [Appendix A: Exploring Further](./Module%201.2/Appendix/A/exploring-further.md)
 - [Appendix B: Practice](./Module%201.2/Appendix/B/practice.md)
+
+## Module 1.3 - Asynchronous JavaScript Deep Dive
+
+### Notes
+
+- [Js Engine](./Module%201.3/notes/js-engine.md)
+- [Callbacks](./Module%201.3/notes/callbacks.md)
+- [Js Engine](./Module%201.3/notes/promises.md)
+
+### Exercises
+
+- [Exercise 0](./Module%201.3/Exercises/e0.js)
