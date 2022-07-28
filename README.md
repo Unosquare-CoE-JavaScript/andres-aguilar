@@ -26,11 +26,15 @@
 
 - [Js Engine](./Module%201.3/notes/js-engine.md)
 - [Callbacks](./Module%201.3/notes/callbacks.md)
-- [Js Engine](./Module%201.3/notes/promises.md)
+- [Promises](./Module%201.3/notes/promises.md)
 
 ### Exercises
-
 - [Exercise 0](./Module%201.3/Exercises/e0.js)
+#### Promise
+
 - [Exercise 1](./Module%201.3/Exercises/e1/js/app.js)
 - [Exercise 2](./Module%201.3/Exercises/e2/js/app.js)
 - [Exercise 3](./Module%201.3/Exercises/e3/js/app.js)
+- [Exercise 4](./Module%201.3/Exercises/e4/js/app.js)
+
+#### Async/Await
