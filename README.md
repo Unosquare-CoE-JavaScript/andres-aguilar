@@ -27,6 +27,7 @@
 - [Js Engine](./Module%201.3/notes/js-engine.md)
 - [Callbacks](./Module%201.3/notes/callbacks.md)
 - [Promises](./Module%201.3/notes/promises.md)
+- [Async/Await](./Module%201.3/notes/async-await.md)
 
 ### Exercises
 - [Exercise 0](./Module%201.3/Exercises/e0.js)
@@ -38,3 +39,12 @@
 - [Exercise 4](./Module%201.3/Exercises/e4/js/app.js)
 
 #### Async/Await
+
+- [Exercise 5](./Module%201.3/Exercises/e5/js/app.js)
+- [Exercise 6](./Module%201.3/Exercises/e6/js/app.js)
+- [Exercise 7](./Module%201.3/Exercises/e7/js/app.js)
+- [Exercise 8](./Module%201.3/Exercises/e8/js/app.js)
+
+### Generator
+
+- [Exercise 9](./Module%201.3/Exercises/e9/js/app.js)
