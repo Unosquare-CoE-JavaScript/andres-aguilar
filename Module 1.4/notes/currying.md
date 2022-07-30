@@ -1,5 +1,7 @@
 # Currying
 
+"A function that will return a new function until it receives all it's arguments.
+
 ## Properties, Arguments & Currying
 
 ```Js
