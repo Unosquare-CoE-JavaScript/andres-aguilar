@@ -22,14 +22,14 @@
 
 ## Module 1.3 - Asynchronous JavaScript Deep Dive
 
-### Notes
+## Notes
 
 - [Js Engine](./Module%201.3/notes/js-engine.md)
 - [Callbacks](./Module%201.3/notes/callbacks.md)
 - [Promises](./Module%201.3/notes/promises.md)
 - [Async/Await](./Module%201.3/notes/async-await.md)
 
-### Exercises
+## Exercises
 - [Exercise 0](./Module%201.3/Exercises/e0.js)
 #### Promise
 
@@ -48,3 +48,23 @@
 ### Generator
 
 - [Exercise 9](./Module%201.3/Exercises/e9/js/app.js)
+
+# Hardcore Functional Programming in JavaScript, v2
+
+## Notes
+
+- [Introduction](./Module%201.4/notes/introduction.md)
+- [Currying](./Module%201.4/notes/currying.md)
+- [Composition](./Module%201.4/notes/composition.md)
+- [Functors](./Module%201.4/notes/functors.md)
+- [Either](./Module%201.4/notes/either.md)
+- [Task](./Module%201.4/notes/task-monad.md)
+
+## Exercises 
+
+- [Currying](./Module%201.4/Exercises/curry.js)
+- [Compose](./Module%201.4/Exercises/compose.js)
+- [Functors](./Module%201.4/Exercises/pf-box.js)
+- [Either](./Module%201.4/Exercises/either.js)
+- [Task](./Module%201.4/Exercises/task.js)
+- [Weather](./Module%201.4/Exercises/weather/index.js)
