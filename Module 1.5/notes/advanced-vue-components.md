@@ -45,6 +45,10 @@ export default {
     }
 }
 ```
+### Important
+
+Any Props we accept from the parent component can be accessed via the **this** keyword,
+it's proxy by Vue
 
 ## Events
 
