@@ -13,6 +13,7 @@ dist
 dist-ssr
 coverage
 *.local
+**/.firebaserc
 
 /cypress/videos/
 /cypress/screenshots/
@@ -26,3 +27,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
