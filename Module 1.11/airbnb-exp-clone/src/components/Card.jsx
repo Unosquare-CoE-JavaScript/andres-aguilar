@@ -1,6 +1,4 @@
 import React from "react"
-import katie from "../assets/katie.png"
-import star from "../assets/star1.png"
 
 /*
 Challenge: Build the Card component
@@ -21,14 +19,25 @@ Notes:
   this data into the component.
 */
 
-export default function Card() {
+export default function Card(props) {
+    let badgeText
+    if (props.openSpots === 0) {
+        badgeText = "SOLD OUT"
+    } else if (props.location === "Online") {
+        badgeText = "ONLINE"
+    }
     return (
         <div className="card">
-            <img src={katie} />
+            {badgeText && <div className="card--badge">{badgeText}</div>}
+            <img src={`/img/${props.coverImg}`} alt={props.coverImg} />
             <div className="card--stats">
-                <img src={star} />
-                <span></span>
+                <img src={"img/star1.png"} className="card--star" />
+                <span>{props.stats.rating}</span>
+                <span className={"gray"}>({props.stats.reviewCount}) • </span>
+                <span className={"gray"}>{props.location}</span>
             </div>
+            <p>{props.title}</p>
+            <p><span className={"bold"}>From ${props.price}</span> / person</p>
         </div>
     )
 }
