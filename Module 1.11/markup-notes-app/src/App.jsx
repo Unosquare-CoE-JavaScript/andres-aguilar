@@ -10,7 +10,10 @@ export default function App() {
     const [currentNoteId, setCurrentNoteId] = React.useState(
         (notes[0] && notes[0].id) || ""
     )
+    React.useEffect(() => {
+        localStorage.setItem("notes", JSON.stringify(notes))
 
+    }, [notes])
     function createNewNote() {
         const newNote = {
             id: nanoid(),
@@ -21,11 +24,23 @@ export default function App() {
     }
 
     function updateNote(text) {
-        setNotes(oldNotes => oldNotes.map(oldNote => {
-            return oldNote.id === currentNoteId
-                ? { ...oldNote, body: text }
-                : oldNote
-        }))
+        setNotes(oldNotes => {
+            const newArray = []
+            for(let i = 0; i < oldNotes.length; i++) {
+                const oldNote = oldNotes[i]
+                if(oldNote.id === currentNoteId) {
+                    newArray.unshift({...oldNote, body: text})
+                } else {
+                    newArray.push(oldNote)
+                }
+            }
+            return newArray
+        })
+    }
+
+    function deleteNote(event, noteId) {
+        event.stopPropagation()
+        setNotes(oldNotes => oldNotes.filter(note => note.id !== noteId))
     }
 
     function findCurrentNote() {
@@ -49,6 +64,7 @@ export default function App() {
                             currentNote={findCurrentNote()}
                             setCurrentNoteId={setCurrentNoteId}
                             newNote={createNewNote}
+                            deleteNote={deleteNote}
                         />
                         {
                             currentNoteId &&
