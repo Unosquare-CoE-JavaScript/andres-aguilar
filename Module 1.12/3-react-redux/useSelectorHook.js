@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 // Add the selector to the below import statement 
-import { loadData, selectFilteredAllRecipes } from './allRecipesSlice.js';
+import { loadData, selectFilteredAllRecipes } from './allRecipesSlice.js.js';
 import { addRecipe } from '../favoriteRecipes/favoriteRecipesSlice.js';
 import FavoriteButton from "../../components/FavoriteButton";
 import Recipe from "../../components/Recipe";

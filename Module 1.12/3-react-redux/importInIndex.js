@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 
-import { App } from './app/App.js';
-import { store } from './app/store.js';
+import { App } from './app/App.js.js';
+import { store } from './app/store.js.js';
 
 ReactDOM.render(
   // Wrap root application with Provider component below.
